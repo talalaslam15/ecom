@@ -4,9 +4,8 @@ import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 
 export const metadata: Metadata = {
-  title: "Dashboard Template",
-  description:
-    "A modern Next.js dashboard template with TypeScript, Tailwind CSS, and shadcn/ui",
+  title: "E-Commerce Store",
+  description: "Your one-stop shop for quality products at competitive prices",
 };
 
 export default function RootLayout({

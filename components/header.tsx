@@ -4,6 +4,8 @@ import Link from "next/link";
 import { DarkModeToggle } from "@/components/DarkModeToggle";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/lib/auth";
+import { CartSheet } from "@/components/cart-sheet";
+import { Store } from "lucide-react";
 
 export function Header() {
   const { user, logout } = useAuth();
@@ -11,8 +13,9 @@ export function Header() {
   return (
     <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-        <Link href="/" className="font-bold text-xl">
-          Dashboard Template
+        <Link href="/" className="font-bold text-xl flex items-center gap-2">
+          <Store className="h-6 w-6" />
+          E-Commerce Store
         </Link>
 
         <nav className="hidden md:flex items-center space-x-6">
@@ -23,16 +26,22 @@ export function Header() {
             Home
           </Link>
           <Link
+            href="/products"
+            className="text-foreground/80 hover:text-foreground transition-colors"
+          >
+            Products
+          </Link>
+          <Link
+            href="/categories"
+            className="text-foreground/80 hover:text-foreground transition-colors"
+          >
+            Categories
+          </Link>
+          <Link
             href="/about"
             className="text-foreground/80 hover:text-foreground transition-colors"
           >
             About
-          </Link>
-          <Link
-            href="/services"
-            className="text-foreground/80 hover:text-foreground transition-colors"
-          >
-            Services
           </Link>
           <Link
             href="/contact"
@@ -43,23 +52,29 @@ export function Header() {
         </nav>
 
         <div className="flex items-center space-x-4">
+          <CartSheet />
           <DarkModeToggle />
           {user ? (
             <div className="flex items-center space-x-4">
-              <Link href="/dashboard">
-                <Button variant="outline">Dashboard</Button>
-              </Link>
-              <Button variant="ghost" onClick={logout}>
+              {user.isAdmin && (
+                <Link href="/dashboard">
+                  <Button variant="outline">Admin Dashboard</Button>
+                </Link>
+              )}
+              <span className="text-sm text-muted-foreground">
+                Hello, {user.name}
+              </span>
+              <Button onClick={logout} variant="outline">
                 Logout
               </Button>
             </div>
           ) : (
             <div className="flex items-center space-x-2">
               <Link href="/auth/login">
-                <Button variant="ghost">Login</Button>
+                <Button variant="outline">Login</Button>
               </Link>
               <Link href="/auth/register">
-                <Button>Get Started</Button>
+                <Button>Sign Up</Button>
               </Link>
             </div>
           )}

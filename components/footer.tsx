@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Store } from "lucide-react";
 
 export function Footer() {
   return (
@@ -6,46 +7,49 @@ export function Footer() {
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <h3 className="font-bold text-lg mb-4">Dashboard Template</h3>
+            <div className="flex items-center gap-2 mb-4">
+              <Store className="h-6 w-6" />
+              <h3 className="font-bold text-lg">E-Commerce Store</h3>
+            </div>
             <p className="text-muted-foreground">
-              A modern Next.js dashboard template with TypeScript, Tailwind CSS,
-              and shadcn/ui.
+              Your one-stop shop for quality products at competitive prices.
+              Fast shipping and excellent customer service.
             </p>
           </div>
 
           <div>
-            <h4 className="font-semibold mb-4">Navigation</h4>
+            <h4 className="font-semibold mb-4">Shop</h4>
             <ul className="space-y-2">
               <li>
                 <Link
-                  href="/"
+                  href="/products"
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  Home
+                  All Products
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/about"
+                  href="/categories"
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  About
+                  Categories
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/services"
+                  href="/categories/electronics"
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  Services
+                  Electronics
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/contact"
+                  href="/categories/clothing"
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  Contact
+                  Clothing
                 </Link>
               </li>
             </ul>

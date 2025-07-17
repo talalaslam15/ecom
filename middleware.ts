@@ -3,10 +3,10 @@ import { NextRequest, NextResponse } from "next/server";
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Check if user is authenticated by looking for a simple auth flag in cookies
-  // In a real app, you'd validate a JWT token or session ID
-  const isAuthenticated =
-    request.cookies.get("auth-token")?.value === "authenticated";
+  // Check if user is authenticated by looking for auth-token cookie
+  // The auth system sets this to the user's ID when logged in
+  const authToken = request.cookies.get("auth-token")?.value;
+  const isAuthenticated = authToken && authToken !== "";
 
   // Protected dashboard routes
   const isDashboardRoute = pathname.startsWith("/dashboard");

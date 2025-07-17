@@ -19,9 +19,19 @@ import { DarkModeToggle } from "@/components/DarkModeToggle";
 
 const navigation = [
   {
-    name: "Dashboard",
+    name: "Overview",
     href: "/dashboard",
     icon: LayoutDashboard,
+  },
+  {
+    name: "Orders",
+    href: "/dashboard/orders",
+    icon: BarChart3,
+  },
+  {
+    name: "Products",
+    href: "/dashboard/products",
+    icon: Users,
   },
   {
     name: "Analytics",
@@ -29,8 +39,8 @@ const navigation = [
     icon: BarChart3,
   },
   {
-    name: "Users",
-    href: "/dashboard/users",
+    name: "Customers",
+    href: "/dashboard/customers",
     icon: Users,
   },
   {
@@ -48,7 +58,7 @@ function SidebarContent() {
     <div className="flex h-full flex-col">
       <div className="flex h-16 items-center border-b px-6">
         <Link href="/dashboard" className="font-semibold text-xl">
-          Dashboard
+          E-Commerce Admin
         </Link>
       </div>
 
