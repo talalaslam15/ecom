@@ -1,11 +1,11 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { User } from "@/types";
-import { USERS } from "@/lib/data";
+import { User } from "@prisma/client";
+import { loginUser } from "./actions/auth";
 
 interface AuthContextType {
-  user: User | null;
+  user: Omit<User, "password"> | null;
   login: (email: string, password: string) => Promise<boolean>;
   logout: () => void;
   isLoading: boolean;
@@ -14,7 +14,7 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<Omit<User, "password"> | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -29,45 +29,28 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const login = async (email: string, password: string): Promise<boolean> => {
     setIsLoading(true);
 
-    // Simulate API call delay
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    try {
+      const result = await loginUser(email, password);
 
-    // Check if user exists in mock data
-    const existingUser = USERS.find((u) => u.email === email);
+      if (result.success && result.user) {
+        setUser(result.user);
+        localStorage.setItem("user", JSON.stringify(result.user));
 
-    if (existingUser && password) {
-      setUser(existingUser);
-      localStorage.setItem("user", JSON.stringify(existingUser));
+        // Set auth cookie for middleware
+        document.cookie = `auth-token=${result.user.id}; path=/; max-age=86400`;
 
-      // Set auth cookie for middleware
-      document.cookie = `auth-token=${existingUser.id}; path=/; max-age=86400`;
-
+        setIsLoading(false);
+        return true;
+      } else {
+        setIsLoading(false);
+        console.error("Login failed:", result.error);
+        return false;
+      }
+    } catch (error) {
+      console.error("Login error:", error);
       setIsLoading(false);
-      return true;
+      return false;
     }
-
-    // If user doesn't exist, create a new one (for demo purposes)
-    if (email && password) {
-      const userData: User = {
-        id: Date.now().toString(),
-        email,
-        name: email.split("@")[0],
-        isAdmin: email === "admin@example.com", // Make admin@example.com an admin
-        createdAt: new Date(),
-      };
-
-      setUser(userData);
-      localStorage.setItem("user", JSON.stringify(userData));
-
-      // Set auth cookie for middleware
-      document.cookie = `auth-token=${userData.id}; path=/; max-age=86400`;
-
-      setIsLoading(false);
-      return true;
-    }
-
-    setIsLoading(false);
-    return false;
   };
 
   const logout = () => {
