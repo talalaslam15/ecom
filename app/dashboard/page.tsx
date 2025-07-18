@@ -8,7 +8,8 @@ import {
   formatCurrency,
   formatDate,
   getStatusColor,
-} from "@/lib/analytics";
+  type OrderAnalytics,
+} from "@/lib/actions/analytics";
 import {
   BarChart,
   Bar,
@@ -27,10 +28,35 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useAuth } from "@/lib/auth";
+import { useEffect, useState } from "react";
 
 export default function DashboardPage() {
   const { user } = useAuth();
-  const analytics = generateOrderAnalytics();
+  const [analytics, setAnalytics] = useState<OrderAnalytics | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadAnalytics = async () => {
+      try {
+        const data = await generateOrderAnalytics();
+        setAnalytics(data);
+      } catch (error) {
+        console.error("Failed to load analytics:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadAnalytics();
+  }, []);
+
+  if (loading) {
+    return <div className="p-6">Loading dashboard...</div>;
+  }
+
+  if (!analytics) {
+    return <div className="p-6">Failed to load dashboard data</div>;
+  }
 
   return (
     <div className="space-y-6">
@@ -179,7 +205,9 @@ export default function DashboardPage() {
                   <div>
                     <p className="font-medium">Order #{order.id}</p>
                     <p className="text-sm text-muted-foreground">
-                      {order.customerInfo.name} • {formatDate(order.createdAt)}
+                      {(order.customerInfo as { name: string } | null)?.name ||
+                        "Unknown"}{" "}
+                      • {formatDate(order.createdAt)}
                     </p>
                   </div>
                 </div>
