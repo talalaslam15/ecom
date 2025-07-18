@@ -1,5 +1,7 @@
+"use client";
 import { Order, Product, OrderAnalytics } from "@/types";
 import { ORDERS } from "@/lib/data";
+import { OrderStatus } from "@prisma/client";
 
 export function generateOrderAnalytics(): OrderAnalytics {
   const orders = ORDERS;
@@ -83,17 +85,17 @@ export function formatDate(date: Date): string {
   }).format(date);
 }
 
-export function getStatusColor(status: Order["status"]): string {
+export function getStatusColor(status: OrderStatus): string {
   switch (status) {
-    case "pending":
+    case "PENDING":
       return "text-yellow-600 bg-yellow-100";
-    case "processing":
+    case "PROCESSING":
       return "text-blue-600 bg-blue-100";
-    case "shipped":
+    case "SHIPPED":
       return "text-purple-600 bg-purple-100";
-    case "delivered":
+    case "DELIVERED":
       return "text-green-600 bg-green-100";
-    case "cancelled":
+    case "CANCELLED":
       return "text-red-600 bg-red-100";
     default:
       return "text-gray-600 bg-gray-100";

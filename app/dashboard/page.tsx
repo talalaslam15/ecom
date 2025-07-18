@@ -5,9 +5,9 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   generateOrderAnalytics,
-  formatCurrency,
-  formatDate,
-  getStatusColor,
+  // formatCurrency,
+  // formatDate,
+  // getStatusColor,
   type OrderAnalytics,
 } from "@/lib/actions/analytics";
 import {
@@ -29,6 +29,8 @@ import {
 import Link from "next/link";
 import { useAuth } from "@/lib/auth";
 import { useEffect, useState } from "react";
+import { formatCurrency, formatDate, getStatusColor } from "@/lib/analytics";
+import { OrderStatus } from "@prisma/client";
 
 export default function DashboardPage() {
   const { user } = useAuth();
@@ -240,14 +242,7 @@ export default function DashboardPage() {
             <CardContent>
               <div className="text-2xl font-bold">{count}</div>
               <Badge
-                className={getStatusColor(
-                  status as
-                    | "pending"
-                    | "processing"
-                    | "shipped"
-                    | "delivered"
-                    | "cancelled"
-                )}
+                className={getStatusColor(status as OrderStatus)}
                 variant="secondary"
               >
                 {status}
