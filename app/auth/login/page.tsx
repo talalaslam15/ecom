@@ -34,7 +34,15 @@ export default function LoginPage() {
 
     const success = await login(email, password);
     if (success) {
-      router.push("/dashboard");
+      // Wait a moment for auth context to update, then redirect based on role
+      setTimeout(() => {
+        const userData = JSON.parse(localStorage.getItem("user") || "{}");
+        if (userData.isAdmin) {
+          router.push("/dashboard");
+        } else {
+          router.push("/user-dashboard");
+        }
+      }, 100);
     } else {
       setError("Invalid email or password");
     }
