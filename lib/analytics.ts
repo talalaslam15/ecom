@@ -77,14 +77,6 @@ export function formatCurrency(amount: number): string {
   }).format(amount);
 }
 
-export function formatDate(date: Date): string {
-  return new Intl.DateTimeFormat("en-US", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  }).format(date);
-}
-
 export function getStatusColor(status: OrderStatus): string {
   switch (status) {
     case "PENDING":

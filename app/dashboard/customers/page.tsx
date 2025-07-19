@@ -14,12 +14,13 @@ import {
 } from "@/components/ui/table";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Search, Users, UserCheck, Clock, DollarSign } from "lucide-react";
-import { formatCurrency, formatDate } from "@/lib/analytics";
+import { formatCurrency } from "@/lib/analytics";
 import {
   getCustomersWithStats,
   //   getCustomerStats,
   type CustomerWithStats,
 } from "@/lib/actions/customers";
+import dayjs from "dayjs";
 
 export default function CustomersPage() {
   const [customers, setCustomers] = useState<CustomerWithStats[]>([]);
@@ -246,13 +247,15 @@ export default function CustomersPage() {
                     </TableCell>
                     <TableCell>
                       <div className="text-sm">
-                        {lastOrder ? formatDate(lastOrder.createdAt) : "Never"}
+                        {lastOrder
+                          ? dayjs(lastOrder.createdAt).format("MMM D, YYYY")
+                          : "Never"}
                       </div>
                     </TableCell>
                     <TableCell>{getCustomerStatus(customer)}</TableCell>
                     <TableCell>
                       <div className="text-sm">
-                        {formatDate(customer.createdAt)}
+                        {dayjs(customer.createdAt).format("MMM D, YYYY")}
                       </div>
                     </TableCell>
                   </TableRow>

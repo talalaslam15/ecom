@@ -29,8 +29,9 @@ import {
 import Link from "next/link";
 import { useAuth } from "@/lib/auth";
 import { useEffect, useState } from "react";
-import { formatCurrency, formatDate, getStatusColor } from "@/lib/analytics";
+import { formatCurrency, getStatusColor } from "@/lib/analytics";
 import { OrderStatus } from "@prisma/client";
+import dayjs from "dayjs";
 
 export default function DashboardPage() {
   const { user } = useAuth();
@@ -209,7 +210,8 @@ export default function DashboardPage() {
                     <p className="text-sm text-muted-foreground">
                       {(order.customerInfo as { name: string } | null)?.name ||
                         "Unknown"}{" "}
-                      • {formatDate(order.createdAt)}
+                      {/* • {formatDate(order.createdAt)} */}•{" "}
+                      {dayjs(order.createdAt).format("MMM D, YYYY")} •
                     </p>
                   </div>
                 </div>
