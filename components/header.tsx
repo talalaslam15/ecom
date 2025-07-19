@@ -61,9 +61,11 @@ export function Header() {
                   <Button variant="outline">Admin Dashboard</Button>
                 </Link>
               )}
-              <span className="text-sm text-muted-foreground">
-                Hello, {user.name}
-              </span>
+              <Link href="/dashboard">
+                <span className="text-sm text-muted-foreground">
+                  Hello, {user.name}
+                </span>
+              </Link>
               <Button onClick={logout} variant="outline">
                 Logout
               </Button>
