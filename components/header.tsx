@@ -56,16 +56,14 @@ export function Header() {
           <DarkModeToggle />
           {user ? (
             <div className="flex items-center space-x-4">
-              {user.isAdmin && (
+              {user && (
                 <Link href="/dashboard">
-                  <Button variant="outline">Admin Dashboard</Button>
+                  <Button variant="outline">Dashboard</Button>
                 </Link>
               )}
-              <Link href="/dashboard">
-                <span className="text-sm text-muted-foreground">
-                  Hello, {user.name}
-                </span>
-              </Link>
+              <span className="text-sm text-muted-foreground">
+                Hello, {user.name}
+              </span>
               <Button onClick={logout} variant="outline">
                 Logout
               </Button>
