@@ -52,7 +52,7 @@ export default function ProductsPage() {
       </div>
 
       {/* Filters */}
-      <div className="bg-muted/50 rounded-lg p-6 mb-8">
+      <div className="bg-accent/10 rounded-lg p-6 mb-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div>
             <Label htmlFor="search">Search Products</Label>

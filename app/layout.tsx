@@ -4,6 +4,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
 import { AuthProvider } from "@/lib/auth";
 import { CartProvider } from "@/lib/cart";
+import { Toaster } from "sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,6 +38,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <Toaster />
           <AuthProvider>
             <CartProvider>{children}</CartProvider>
           </AuthProvider>

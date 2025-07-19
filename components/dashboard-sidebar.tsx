@@ -5,7 +5,12 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import {
   LayoutDashboard,
   Users,
@@ -13,6 +18,8 @@ import {
   BarChart3,
   Menu,
   LogOut,
+  Package,
+  ShoppingCart,
 } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 import { DarkModeToggle } from "@/components/DarkModeToggle";
@@ -26,12 +33,12 @@ const navigation = [
   {
     name: "Orders",
     href: "/dashboard/orders",
-    icon: BarChart3,
+    icon: ShoppingCart,
   },
   {
     name: "Products",
     href: "/dashboard/products",
-    icon: Users,
+    icon: Package,
   },
   {
     name: "Analytics",
@@ -117,6 +124,7 @@ export function DashboardSidebar() {
             <Menu className="h-4 w-4" />
           </Button>
         </SheetTrigger>
+        <SheetTitle className="sr-only">Menu</SheetTitle>
         <SheetContent side="left" className="w-64 p-0">
           <SidebarContent />
         </SheetContent>
