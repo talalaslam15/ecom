@@ -7,12 +7,12 @@ import { z } from "zod";
 
 // Validation schemas
 const LoginSchema = z.object({
-  email: z.string().email("Invalid email address"),
+  email: z.email(),
   password: z.string().min(1, "Password is required"),
 });
 
 const RegisterSchema = z.object({
-  email: z.string().email("Invalid email address"),
+  email: z.email(),
   password: z.string().min(6, "Password must be at least 6 characters"),
   name: z.string().min(1, "Name is required"),
   phone: z.string().optional(),
