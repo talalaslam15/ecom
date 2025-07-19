@@ -202,7 +202,7 @@ export const ORDERS: Order[] = [
       },
     ],
     total: 699.98,
-    status: "delivered",
+    status: "DELIVERED",
     customerInfo: {
       name: "John Doe",
       email: "john@example.com",
@@ -225,7 +225,7 @@ export const ORDERS: Order[] = [
       },
     ],
     total: 74.97,
-    status: "shipped",
+    status: "SHIPPED",
     customerInfo: {
       name: "Jane Smith",
       email: "jane@example.com",
@@ -255,7 +255,7 @@ export const ORDERS: Order[] = [
       },
     ],
     total: 209.98,
-    status: "processing",
+    status: "PROCESSING",
     customerInfo: {
       name: "Bob Johnson",
       email: "bob@example.com",
@@ -278,7 +278,7 @@ export const ORDERS: Order[] = [
       },
     ],
     total: 119.99,
-    status: "pending",
+    status: "PENDING",
     customerInfo: {
       name: "John Doe",
       email: "john@example.com",

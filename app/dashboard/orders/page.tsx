@@ -12,8 +12,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { ORDERS } from "@/lib/data";
-import { formatCurrency, formatDate, getStatusColor } from "@/lib/analytics";
+import { formatCurrency, getStatusColor } from "@/lib/analytics";
 import { Eye, Download, Filter } from "lucide-react";
+import dayjs from "dayjs";
 
 export default function OrdersPage() {
   const orders = ORDERS.sort(
@@ -70,7 +71,9 @@ export default function OrdersPage() {
                       </p>
                     </div>
                   </TableCell>
-                  <TableCell>{formatDate(order.createdAt)}</TableCell>
+                  <TableCell>
+                    {dayjs(order.createdAt).format("MMM D, YYYY")}
+                  </TableCell>
                   <TableCell>
                     <Badge className={getStatusColor(order.status)}>
                       {order.status}
@@ -124,7 +127,7 @@ export default function OrdersPage() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {orders.filter((o) => o.status === "pending").length}
+              {orders.filter((o) => o.status === "PENDING").length}
             </div>
             <p className="text-xs text-muted-foreground">Awaiting processing</p>
           </CardContent>
@@ -138,7 +141,7 @@ export default function OrdersPage() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {orders.filter((o) => o.status === "shipped").length}
+              {orders.filter((o) => o.status === "SHIPPED").length}
             </div>
             <p className="text-xs text-muted-foreground">Currently shipping</p>
           </CardContent>
@@ -152,7 +155,7 @@ export default function OrdersPage() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {orders.filter((o) => o.status === "delivered").length}
+              {orders.filter((o) => o.status === "DELIVERED").length}
             </div>
             <p className="text-xs text-muted-foreground">
               Successfully delivered

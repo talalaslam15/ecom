@@ -1,3 +1,5 @@
+import { OrderStatus } from "@prisma/client";
+
 export interface Product {
   id: string;
   name: string;
@@ -23,7 +25,8 @@ export interface Order {
   userId: string;
   items: CartItem[];
   total: number;
-  status: "pending" | "processing" | "shipped" | "delivered" | "cancelled";
+  // status: "pending" | "processing" | "shipped" | "delivered" | "cancelled";
+  status: OrderStatus;
   customerInfo: {
     name: string;
     email: string;

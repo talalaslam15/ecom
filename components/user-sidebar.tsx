@@ -11,12 +11,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import {
-  ShoppingBag,
-  Menu,
-  LogOut,
-  Home,
-} from "lucide-react";
+import { ShoppingBag, Menu, LogOut, Home } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 import { DarkModeToggle } from "@/components/DarkModeToggle";
 
