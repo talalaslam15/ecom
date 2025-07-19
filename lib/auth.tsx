@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { User } from "@prisma/client";
 import { loginUser } from "./actions/auth";
+import { toast } from "sonner";
 
 interface AuthContextType {
   user: Omit<User, "password"> | null;
@@ -43,11 +44,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return true;
       } else {
         setIsLoading(false);
-        console.error("Login failed:", result.error);
+        // Show toast for login failure
+        toast.error(result.error || "Invalid email or password");
         return false;
       }
     } catch (error) {
-      console.error("Login error:", error);
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "An error occurred during login"
+      );
       setIsLoading(false);
       return false;
     }
