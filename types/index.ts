@@ -1,3 +1,5 @@
+import { OrderWithDetails } from "@/lib/actions/orders";
+import { ProductWithCategory } from "@/lib/actions/products";
 import { OrderStatus } from "@prisma/client";
 
 export interface Product {
@@ -17,7 +19,7 @@ export interface CartItem {
   productId: string;
   quantity: number;
   price: number;
-  product: Product;
+  product: ProductWithCategory;
 }
 
 export interface Order {
@@ -25,7 +27,6 @@ export interface Order {
   userId: string;
   items: CartItem[];
   total: number;
-  // status: "pending" | "processing" | "shipped" | "delivered" | "cancelled";
   status: OrderStatus;
   customerInfo: {
     name: string;
@@ -56,7 +57,7 @@ export interface Category {
 
 export interface CartContextType {
   items: CartItem[];
-  addItem: (product: Product, quantity?: number) => void;
+  addItem: (product: ProductWithCategory, quantity?: number) => void;
   removeItem: (productId: string) => void;
   updateQuantity: (productId: string, quantity: number) => void;
   clearCart: () => void;
@@ -69,11 +70,11 @@ export interface OrderAnalytics {
   totalRevenue: number;
   averageOrderValue: number;
   topProducts: {
-    product: Product;
+    product: ProductWithCategory;
     quantity: number;
     revenue: number;
   }[];
-  recentOrders: Order[];
+  recentOrders: OrderWithDetails[];
   ordersByStatus: Record<Order["status"], number>;
   revenueByMonth: {
     month: string;
