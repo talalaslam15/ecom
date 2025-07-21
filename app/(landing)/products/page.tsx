@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ProductCard } from "@/components/product-card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,34 +13,55 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { PRODUCTS, CATEGORIES } from "@/lib/data";
+// import { PRODUCTS, CATEGORIES } from "@/lib/data";
 import { Search, Filter } from "lucide-react";
+import { Category } from "@/types";
+import {
+  getCategories,
+  getProducts,
+  ProductWithCategory,
+} from "@/lib/actions/products";
 
 export default function ProductsPage() {
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [products, setProducts] = useState<ProductWithCategory[]>([]);
+
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [sortBy, setSortBy] = useState("name");
 
-  const filteredProducts = PRODUCTS.filter((product) => {
-    const matchesSearch =
-      product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      product.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory =
-      selectedCategory === "all" || product.category === selectedCategory;
+  const filteredProducts = products
+    .filter((product) => {
+      const matchesSearch =
+        product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        product.description.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesCategory =
+        selectedCategory === "all" ||
+        product.category.name === selectedCategory;
 
-    return matchesSearch && matchesCategory;
-  }).sort((a, b) => {
-    switch (sortBy) {
-      case "price-low":
-        return a.price - b.price;
-      case "price-high":
-        return b.price - a.price;
-      case "name":
-        return a.name.localeCompare(b.name);
-      default:
-        return 0;
+      return matchesSearch && matchesCategory;
+    })
+    .sort((a, b) => {
+      switch (sortBy) {
+        case "price-low":
+          return a.price - b.price;
+        case "price-high":
+          return b.price - a.price;
+        case "name":
+          return a.name.localeCompare(b.name);
+        default:
+          return 0;
+      }
+    });
+  useEffect(() => {
+    async function fetchData() {
+      const categories = await getCategories();
+      const products = await getProducts();
+      setCategories(categories);
+      setProducts(products);
     }
-  });
+    fetchData();
+  }, []);
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -79,7 +100,7 @@ export default function ProductsPage() {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Categories</SelectItem>
-                {CATEGORIES.map((category) => (
+                {categories.map((category) => (
                   <SelectItem key={category.id} value={category.name}>
                     {category.name}
                   </SelectItem>
@@ -123,7 +144,7 @@ export default function ProductsPage() {
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-2">
           <span className="text-sm text-muted-foreground">
-            Showing {filteredProducts.length} of {PRODUCTS.length} products
+            Showing {filteredProducts.length} of {products.length} products
           </span>
           {selectedCategory !== "all" && (
             <Badge variant="secondary">{selectedCategory}</Badge>

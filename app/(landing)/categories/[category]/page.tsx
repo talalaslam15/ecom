@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ProductCard } from "@/components/product-card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,21 +13,38 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { PRODUCTS, CATEGORIES } from "@/lib/data";
 import { Search, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import {
+  getProducts,
+  getCategories,
+  ProductWithCategory,
+} from "@/lib/actions/products";
+import { Category } from "@/types";
 
 export default function CategoryPage() {
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [products, setProducts] = useState<ProductWithCategory[]>([]);
   const params = useParams();
   const categoryName = params.category as string;
 
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("name");
 
-  const category = CATEGORIES.find(
+  const category = categories.find(
     (c) => c.name.toLowerCase() === categoryName
   );
+
+  useEffect(() => {
+    async function fetchData() {
+      const categories = await getCategories();
+      const products = await getProducts();
+      setCategories(categories);
+      setProducts(products);
+    }
+    fetchData();
+  }, []);
 
   if (!category) {
     return (
@@ -48,8 +65,8 @@ export default function CategoryPage() {
     );
   }
 
-  const categoryProducts = PRODUCTS.filter(
-    (product) => product.category === category.name
+  const categoryProducts = products.filter(
+    (product) => product.category.name === category.name
   );
 
   const filteredProducts = categoryProducts

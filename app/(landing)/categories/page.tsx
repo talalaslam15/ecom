@@ -1,14 +1,15 @@
-"use client";
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { PRODUCTS, CATEGORIES } from "@/lib/data";
 import Link from "next/link";
+import { getCategories, getProducts } from "@/lib/actions/products";
 
-export default function CategoriesPage() {
-  const categoriesWithCounts = CATEGORIES.map((category) => ({
+export default async function CategoriesPage() {
+  const categories = await getCategories();
+  const products = await getProducts();
+  const categoriesWithCounts = categories.map((category) => ({
     ...category,
-    productCount: PRODUCTS.filter((p) => p.category === category.name).length,
+    productCount: products.filter((p) => p.category.name === category.name)
+      .length,
   }));
 
   return (
@@ -40,7 +41,8 @@ export default function CategoriesPage() {
                   {category.description}
                 </p>
                 <div className="grid grid-cols-2 gap-2">
-                  {PRODUCTS.filter((p) => p.category === category.name)
+                  {products
+                    .filter((p) => p.category.name === category.name)
                     .slice(0, 4)
                     .map((product) => (
                       <div

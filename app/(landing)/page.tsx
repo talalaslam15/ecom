@@ -1,15 +1,13 @@
-"use client";
-
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/product-card";
-import { PRODUCTS, CATEGORIES } from "@/lib/data";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Star, Truck, Shield, RefreshCw } from "lucide-react";
+import { getCategories, getProducts } from "@/lib/actions/products";
 
-export default function LandingPage() {
-  const featuredProducts = PRODUCTS.slice(0, 6);
-  const topCategories = CATEGORIES.slice(0, 4);
+export default async function LandingPage() {
+  const featuredProducts = await getProducts(); // Fetch or import your featured products
+  const topCategories = await getCategories(); // Fetch or import your top categories
 
   return (
     <div className="min-h-screen">

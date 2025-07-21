@@ -1,5 +1,5 @@
+"use client";
 import Image from "next/image";
-import { Product } from "@/types";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -11,9 +11,10 @@ import {
 } from "@/components/ui/card";
 import { ShoppingCart, Star } from "lucide-react";
 import { useCart } from "@/lib/cart";
+import { ProductWithCategory } from "@/lib/actions/products";
 
 interface ProductCardProps {
-  product: Product;
+  product: ProductWithCategory;
 }
 
 export function ProductCard({ product }: ProductCardProps) {
@@ -40,7 +41,7 @@ export function ProductCard({ product }: ProductCardProps) {
             }}
           />
           <Badge className="absolute top-2 left-2" variant="secondary">
-            {product.category}
+            {product.category.name}
           </Badge>
           {product.stock < 10 && (
             <Badge className="absolute top-2 right-2" variant="destructive">

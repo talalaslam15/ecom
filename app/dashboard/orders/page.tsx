@@ -1,5 +1,3 @@
-"use client";
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -11,12 +9,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { ORDERS } from "@/lib/data";
+// import { ORDERS } from "@/lib/data";
 import { formatCurrency, getStatusColor } from "@/lib/analytics";
 import { Eye, Download, Filter } from "lucide-react";
 import dayjs from "dayjs";
+import { getOrders } from "@/lib/actions/orders";
 
-export default function OrdersPage() {
+export default async function OrdersPage() {
+  const ORDERS = await getOrders(); // Fetch or import your orders data
   const orders = ORDERS.sort(
     (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
   );
@@ -65,9 +65,9 @@ export default function OrdersPage() {
                   <TableCell className="font-medium">#{order.id}</TableCell>
                   <TableCell>
                     <div>
-                      <p className="font-medium">{order.customerInfo.name}</p>
+                      <p className="font-medium">{order.user.name}</p>
                       <p className="text-sm text-muted-foreground">
-                        {order.customerInfo.email}
+                        {order.user.email}
                       </p>
                     </div>
                   </TableCell>

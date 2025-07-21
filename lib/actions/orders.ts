@@ -1,12 +1,13 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
-import { Order, OrderItem, Product, User, OrderStatus } from "@prisma/client";
+import { Order, OrderItem, User, OrderStatus } from "@prisma/client";
 import { z } from "zod";
+import { ProductWithCategory } from "./products";
 
 export type OrderWithDetails = Order & {
   items: (OrderItem & {
-    product: Product;
+    product: ProductWithCategory;
   })[];
   user: User;
 };
@@ -125,7 +126,11 @@ export async function getOrders(): Promise<OrderWithDetails[]> {
       include: {
         items: {
           include: {
-            product: true,
+            product: {
+              include: {
+                category: true,
+              },
+            },
           },
         },
         user: true,
@@ -150,7 +155,11 @@ export async function getUserOrders(
       include: {
         items: {
           include: {
-            product: true,
+            product: {
+              include: {
+                category: true,
+              },
+            },
           },
         },
         user: true,
@@ -175,7 +184,11 @@ export async function getOrderById(
       include: {
         items: {
           include: {
-            product: true,
+            product: {
+              include: {
+                category: true,
+              },
+            },
           },
         },
         user: true,

@@ -1,10 +1,10 @@
-"use client";
-import { Order, Product, OrderAnalytics } from "@/types";
-import { ORDERS } from "@/lib/data";
+import { Order, OrderAnalytics } from "@/types";
 import { OrderStatus } from "@prisma/client";
+import { getOrders } from "./actions/orders";
+import { ProductWithCategory } from "./actions/products";
 
-export function generateOrderAnalytics(): OrderAnalytics {
-  const orders = ORDERS;
+export async function generateOrderAnalytics(): Promise<OrderAnalytics> {
+  const orders = await getOrders();
   const totalOrders = orders.length;
   const totalRevenue = orders.reduce((sum, order) => sum + order.total, 0);
   const averageOrderValue = totalRevenue / totalOrders;
@@ -12,7 +12,7 @@ export function generateOrderAnalytics(): OrderAnalytics {
   // Calculate top products
   const productSales = new Map<
     string,
-    { quantity: number; revenue: number; product: Product }
+    { quantity: number; revenue: number; product: ProductWithCategory }
   >();
 
   orders.forEach((order) => {
