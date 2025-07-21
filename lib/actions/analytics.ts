@@ -28,7 +28,11 @@ export async function generateOrderAnalytics(): Promise<OrderAnalytics> {
       include: {
         items: {
           include: {
-            product: true,
+            product: {
+              include: {
+                category: true,
+              },
+            },
           },
         },
         user: true,
