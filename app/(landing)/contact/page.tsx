@@ -11,12 +11,12 @@ export default function ContactPage() {
         <div className="text-center mb-16">
           <h1 className="text-4xl font-bold mb-6">Contact Us</h1>
           <p className="text-xl text-muted-foreground">
-            Have a question or want to work with us? We&apos;d love to hear from
-            you.
+            If you have any questions/concerns about our Shipping policy, please
+            feel free to contact our Customer Support department.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div>
           {/* Contact Form */}
           <Card>
             <CardHeader>
@@ -64,91 +64,6 @@ export default function ContactPage() {
               </form>
             </CardContent>
           </Card>
-
-          {/* Contact Information */}
-          <div className="space-y-8">
-            <Card>
-              <CardHeader>
-                <CardTitle>Get in Touch</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <h3 className="font-semibold mb-2">Email</h3>
-                  <p className="text-muted-foreground">
-                    hello@dashboardtemplate.com
-                  </p>
-                </div>
-                <div>
-                  <h3 className="font-semibold mb-2">Phone</h3>
-                  <p className="text-muted-foreground">+1 (555) 123-4567</p>
-                </div>
-                <div>
-                  <h3 className="font-semibold mb-2">Address</h3>
-                  <p className="text-muted-foreground">
-                    123 Developer Street
-                    <br />
-                    Tech City, TC 12345
-                    <br />
-                    United States
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Office Hours</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-2">
-                  <div className="flex justify-between">
-                    <span>Monday - Friday</span>
-                    <span className="text-muted-foreground">
-                      9:00 AM - 6:00 PM
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Saturday</span>
-                    <span className="text-muted-foreground">
-                      10:00 AM - 4:00 PM
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Sunday</span>
-                    <span className="text-muted-foreground">Closed</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>FAQ</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div>
-                    <h4 className="font-medium mb-1">
-                      How quickly do you respond?
-                    </h4>
-                    <p className="text-sm text-muted-foreground">
-                      We typically respond to all inquiries within 24 hours
-                      during business days.
-                    </p>
-                  </div>
-                  <div>
-                    <h4 className="font-medium mb-1">
-                      Do you offer custom development?
-                    </h4>
-                    <p className="text-sm text-muted-foreground">
-                      Yes, we provide custom development services tailored to
-                      your specific needs.
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
         </div>
       </div>
     </div>
